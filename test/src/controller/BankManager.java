@@ -6,6 +6,7 @@ public class BankManager {
 	
 	private UserManager um = UserManager.instance;
 	private AccountManager am = AccountManager.instance;
+	private FileManager fm = FileManager.instance;
 	
 	public BankManager() {}
 	
@@ -27,7 +28,9 @@ public class BankManager {
 				um.delete();
 			}else if(sel ==3) {
 				login();
-			}			
+			}else if(sel == 4) {
+				fm.lode();
+			}
 		}else if(Bank.log != -1){
 			if(sel ==3) {
 				logout();
@@ -46,18 +49,16 @@ public class BankManager {
 			}else if(sel ==10) {
 				print();
 			}else if(sel ==11) {
-				
-			}else if(sel ==12) {
-				
+				fm.save();
 			}
 		}
 		print();
 	}
 	public void printMenu() {
 		if(Bank.log == -1) {
-			System.out.println("1.회원가입 \n2.탈퇴\n3.로그인");			
+			System.out.println("1.회원가입 \n2.탈퇴\n3.로그인\n4.로드");			
 		}else {
-			System.out.println("3.로그아웃\n4.계좌개설(3개 제한)\n5.계좌철회\n6.입금\n7.출금\n8.이체\n9.전계좌조회\n10.전체 유저,계좌 조회\n11.파일 저장\n12.로드");			
+			System.out.println("3.로그아웃\n4.계좌개설(3개 제한)\n5.계좌철회\n6.입금\n7.출금\n8.이체\n9.전계좌조회\n10.전체 유저,계좌 조회\n11.파일 저장");			
 		}
 	}
 	public void print() {

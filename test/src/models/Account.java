@@ -20,4 +20,7 @@ public class Account {
 	public void printInfo() {
 		System.out.println(this.accNum +" : "+this.money);
 	}
+	public String getInfo() {
+		return this.accNum+"/"+this.money;
+	}
 }

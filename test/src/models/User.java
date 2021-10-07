@@ -42,5 +42,8 @@ public class User {
 	public void printUserInfo() {
 		System.out.println(this.userCode+" : "+this.id+" : "+this.pw+" : "+this.name+" : "+this.accCnt);
 	}
+	public String getInfo() {
+		return this.userCode+"/"+this.id+"/"+this.pw+"/"+this.name+"/"+this.accCnt;
+	}
 
 }
