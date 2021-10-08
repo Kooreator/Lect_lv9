@@ -97,8 +97,10 @@ public class AccountManager {
 			if(idx2 != -1) {
 				System.out.print("금액 : ");
 				int gold = Bank.sc.nextInt();
-				this.bm.getUserManager().getUsers().get(Bank.log).getAccount().get(idx).setMoney(-gold);
-				this.bm.getUserManager().getUsers().get(idx1).getAccount().get(idx2).setMoney(gold);
+				if(this.bm.getUserManager().getUsers().get(Bank.log).getAccount().get(idx).getMoney()>=gold) {
+					this.bm.getUserManager().getUsers().get(Bank.log).getAccount().get(idx).setMoney(-gold);
+					this.bm.getUserManager().getUsers().get(idx1).getAccount().get(idx2).setMoney(gold);					
+				}
 			}
 		}
 	}
