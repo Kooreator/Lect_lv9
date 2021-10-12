@@ -109,6 +109,4 @@ public class AccountManager {
 			this.bm.getUserManager().getUsers().get(Bank.log).getAccount().get(i).printInfo();
 		}
 	}
-	
-
 }
