@@ -21,7 +21,9 @@ public class UserManager {
 		String id = Shop.sc.next();
 		if(checkOverlapId(id)) {
 			this.users.add(new User(id));
-			System.out.printf("%d 님 가입을 축하합니다.",id);
+			System.out.println(id+" 님 가입을 축하합니다.");
+		}else {
+			System.out.println("다시 입력 ");
 		}
 	}
 	public boolean checkOverlapId(String id) {
@@ -45,7 +47,7 @@ public class UserManager {
 		String id = Shop.sc.next();
 		if(!checkOverlapId(id)) {
 			this.users.remove(deleteUser(id));	
-			System.out.printf("%d 님 탈퇴완료.",id);
+			System.out.println(id+" 님 탈퇴완료.");
 		}
 	}
 	public boolean login() {

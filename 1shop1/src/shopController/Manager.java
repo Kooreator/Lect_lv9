@@ -33,7 +33,15 @@ public class Manager {
 		while(true) {
 			System.out.println("[1.전체유저] [2.유저추가] [3.유저삭제] [0.뒤로가기]");
 			int select = Shop.sc.nextInt();
-			//if(sel )
+			if(select == 0) {
+				break;
+			}else if(select == 1) {
+				
+			}else if(select ==2 ) {
+				
+			}else if(select == 3) {
+				
+			}
 		}
 	}
 	public void itemManage() {
