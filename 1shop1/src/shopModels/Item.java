@@ -22,7 +22,7 @@ public class Item {
 		return this.category;
 	}
 	public void print() {
-		System.out.println(this.name+" : "+this.price);
+		System.out.println(this.name+" : "+this.price+" : "+this.category);
 	}
 
 }

@@ -2,6 +2,7 @@ package shopController;
 
 import java.util.ArrayList;
 
+import shopMain.Shop;
 import shopModels.Category;
 
 
@@ -26,7 +27,14 @@ public class CategoryManager {
 	}
 	public void selectCategoryMenu(int select) {
 		if(0<=select&&select<this.Categorys.size()) {
-			
+			for(int i=0; i<this.Categorys.size(); i++) {
+				if(select==i) {
+					System.out.println("[아이템] 번호를 입력하세요. ");
+					this.Categorys.get(i).itemsprint();
+					int sel = Shop.sc.nextInt();
+					this.Categorys.get(i).selectItemsMenu(sel);
+				}
+			}
 		}
 	}
 

@@ -38,7 +38,7 @@ public class Shop {
 			System.out.println("[1.쇼핑] [2.장바구니목록] [0.뒤로가기]");
 			int select = sc.nextInt();
 			if(select == 1) {
-				
+				shopSelectMenu();
 			}else if(select == 2) {
 				
 			}else if(select == 3) {
@@ -51,7 +51,7 @@ public class Shop {
 			CategoryManager.instance.categoryprint();
 			System.out.println("[카테고리] 번호를 입력하세요.[종료.-1]");
 			int select = sc.nextInt();
-			
+			CategoryManager.instance.selectCategoryMenu(select);
 		}
 	}
 	public void run() {
