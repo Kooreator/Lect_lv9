@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import shopController.CategoryManager;
+import shopController.Manager;
 import shopController.UserManager;
 
 public class Shop {
@@ -13,7 +14,7 @@ public class Shop {
 	public static int log = -1;
 	
 	private void mainMenu() {
-		System.out.println("[1.가입] [2.탈퇴] [3.로그인] [4.로그아웃]");
+		System.out.println("[1.가입] [2.탈퇴] [3.로그인] [4.로그아웃] [100.관리자]");
 	}
 	public void selectMenu() {
 		int select = sc.nextInt();
@@ -24,6 +25,7 @@ public class Shop {
 		}else if(select == 3) {
 			if(UserManager.instance.login()) {
 				System.out.println("login !!");
+				mainSelectMenu();
 			}else {
 				System.out.println("login X ");
 			}
@@ -31,6 +33,8 @@ public class Shop {
 			if(UserManager.instance.logout()) {
 				System.out.println("logout !!");
 			}
+		}else if(select == 100) {
+			Manager.instance.selectManageerMenu();
 		}
 	}
 	public void mainSelectMenu() {
@@ -40,7 +44,7 @@ public class Shop {
 			if(select == 1) {
 				shopSelectMenu();
 			}else if(select == 2) {
-				
+				UserManager.instance.getUsers().get(log).cartList();
 			}else if(select == 3) {
 				break;
 			}			

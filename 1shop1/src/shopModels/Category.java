@@ -11,7 +11,7 @@ public class Category {
 	private String name;
 	private ArrayList<Item> items; 
 	
-	public Category(String name, int price) {
+	public Category(String name) {
 		this.name = name;
 		this.items = new ArrayList<>();
 	}

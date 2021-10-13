@@ -36,9 +36,9 @@ public class User {
 			if(select == 0) {
 				break;
 			}else if(select == 1) {
-				
+				deleteCart();
 			}else if(select == 2) {
-				
+				buy();
 			}
 		}
 	}
@@ -48,5 +48,22 @@ public class User {
 			this.cart.get(i).print();
 		}
 	}
+	public void deleteCart() {
+		System.out.print("삭제할 품목번호 선택 : ");
+		String select = Shop.sc.next();
+		if(0<=Integer.parseInt(select)&&Integer.parseInt(select)<this.cart.size()) {
+			this.cart.remove(Integer.parseInt(select));
+		}
+	}
+	public void buy() {
+		System.out.print("구매할 품목번호 선택 : ");
+		String select = Shop.sc.next();
+		if(0<=Integer.parseInt(select)&&Integer.parseInt(select)<this.cart.size()) {
+			this.money-=this.cart.get(Integer.parseInt(select)).getPrice();
+			this.cart.remove(Integer.parseInt(select));
+			System.out.println("구매완료");
+		}
+	}
+	
 
 }

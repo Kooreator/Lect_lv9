@@ -37,5 +37,14 @@ public class CategoryManager {
 			}
 		}
 	}
-
+	public int check(String name ) {
+		int check = -1;
+		for(int i=0; i<this.Categorys.size(); i++) {
+			if(this.Categorys.get(i).getName().equals(name)) {
+				check = i;
+			}
+		}
+		return check;
+		
+	}
 }
