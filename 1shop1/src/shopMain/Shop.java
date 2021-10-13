@@ -45,7 +45,7 @@ public class Shop {
 				shopSelectMenu();
 			}else if(select == 2) {
 				UserManager.instance.getUsers().get(log).cartList();
-			}else if(select == 3) {
+			}else if(select == 0) {
 				break;
 			}			
 		}
@@ -56,9 +56,14 @@ public class Shop {
 			System.out.println("[카테고리] 번호를 입력하세요.[종료.-1]");
 			int select = sc.nextInt();
 			CategoryManager.instance.selectCategoryMenu(select);
+			if(select ==-1) {
+				break;
+			}
 		}
 	}
 	public void run() {
+		CategoryManager.instance.init();
+		UserManager.instance.init();
 		while(true){
 			mainMenu();
 			selectMenu();

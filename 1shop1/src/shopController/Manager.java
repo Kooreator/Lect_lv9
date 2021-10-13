@@ -25,7 +25,7 @@ public class Manager {
 			}else if(select == 2) {
 				categoryManage();
 			}else if(select == 3) {
-				
+				userManage();
 			}
 		}
 	}
@@ -36,11 +36,18 @@ public class Manager {
 			if(select == 0) {
 				break;
 			}else if(select == 1) {
-				
+				this.um.userPrint();
 			}else if(select ==2 ) {
-				
+				this.um.creatUser();
+				this.um.userPrint();
 			}else if(select == 3) {
-				
+				this.um.userPrint();
+				System.out.println("삭제할 유저번호 선택 : ");
+				int deleteNum = Shop.sc.nextInt();
+				if(0<=deleteNum && deleteNum < this.um.getUsers().size()) {
+					this.um.getUsers().remove(deleteNum);
+				}
+				this.um.userPrint();
 			}
 		}
 	}
@@ -51,21 +58,32 @@ public class Manager {
 			if(select == 0) {
 				break;
 			}else if(select ==1) {
-				im.print();
+				im.itemPrint();;
 			}else if(select ==2) {
-				System.out.print("itemName : ");
-				String name = Shop.sc.next();
-				System.out.print("price : ");
-				String price = Shop.sc.next();
 				System.out.println("category : ");
 				String category = Shop.sc.next();
-				im.getItems().add(new Item(name,Integer.parseInt(price),category));
+				if(this.cm.check(category)!=-1) {
+					System.out.print("itemName : ");
+					String name = Shop.sc.next();
+					System.out.print("price : ");
+					String price = Shop.sc.next();
+					this.im.getCategory().get(this.cm.check(category)).getItems().add
+					(new Item(name,Integer.parseInt(price),category));					
+				}else {
+					System.out.println("category 다시입력!!");
+				}
 			}else if(select ==3) {
-				im.print();
-				System.out.print("삭제할 아이템번호 선택 : ");
-				String num = Shop.sc.next();
-				if(0<=Integer.parseInt(num)&&Integer.parseInt(num)<im.getItems().size()) {
-					im.getItems().remove(Integer.parseInt(num));					
+				im.itemPrint();
+				System.out.print("삭제할 아이템의 해당 category name 입력 : ");
+				String categoryName = Shop.sc.next();
+				if(this.cm.check(categoryName)!=-1) {
+					for(int i=0; i<this.im.getCategory().get(this.cm.check(categoryName)).getItems().size();i++) {
+						System.out.print(i+". ");
+						this.im.getCategory().get(this.cm.check(categoryName)).getItems().get(i).print();
+					}
+					System.out.print("삭제할 아이템 번호 선택 : ");
+					String num = Shop.sc.next();
+					this.im.getCategory().get(this.cm.check(categoryName)).getItems().remove(Integer.parseInt(num));
 				}
 			}
 		}
@@ -93,5 +111,4 @@ public class Manager {
 			}
 		}
 	}
-
 }

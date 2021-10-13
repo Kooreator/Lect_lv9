@@ -9,9 +9,9 @@ public class User {
 	private int money;
 	private ArrayList<Cart> cart;
 	
-	public User(String id) {
+	public User(String id,int money) {
 		this.id = id;
-		this.money = 0;
+		this.money = money;
 		this.cart = new ArrayList<>();
 	}
 	
@@ -56,14 +56,21 @@ public class User {
 		}
 	}
 	public void buy() {
+		cartPrint();
 		System.out.print("구매할 품목번호 선택 : ");
 		String select = Shop.sc.next();
 		if(0<=Integer.parseInt(select)&&Integer.parseInt(select)<this.cart.size()) {
-			this.money-=this.cart.get(Integer.parseInt(select)).getPrice();
-			this.cart.remove(Integer.parseInt(select));
-			System.out.println("구매완료");
+			if(this.money>=this.cart.get(Integer.parseInt(select)).getPrice()) {
+				this.money-=this.cart.get(Integer.parseInt(select)).getPrice();
+				this.cart.remove(Integer.parseInt(select));
+				System.out.println("구매완료");				
+			}else {
+				System.out.println("Money 잔액 부족");
+			}
 		}
 	}
-	
+	public void userPrint() {
+		System.out.println(this.id+" : "+this.money);
+	}
 
 }
