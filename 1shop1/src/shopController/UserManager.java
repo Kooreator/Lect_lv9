@@ -88,6 +88,16 @@ public class UserManager {
 			return true;
 		}
 	}
+	public void fullUserCarts() {
+		for(int i=0; i<this.users.size(); i++) {
+			if(this.users.get(i).getCart().size()!=0) {
+				System.out.println(this.users.get(i).getId());				
+			}
+			for(int j=0; j<this.users.get(i).getCart().size(); j++) {
+				this.users.get(i).getCart().get(j).print();
+			}
+		}
+	}
 	public void userPrint() {
 		for(int i=0; i<this.users.size(); i++) {
 			System.out.print(i+". ");

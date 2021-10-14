@@ -12,7 +12,7 @@ public class Manager {
 	private CategoryManager cm = CategoryManager.instance;
 	
 	public void print() {
-		System.out.println("[1.아이템관리] [2.카테고리관리] [3.유저관리] [0.뒤로가기] ");
+		System.out.println("[1.아이템관리] [2.카테고리관리] [3.유저관리] [4.장바구니관리] [0.뒤로가기] ");
 	}
 	public void selectManageerMenu() {
 		while(true) {
@@ -26,8 +26,22 @@ public class Manager {
 				categoryManage();
 			}else if(select == 3) {
 				userManage();
+			}else if(select == 4) {
+				cartManager();
 			}
 		}
+	}
+	public void cartManager() {
+		while(true) {
+			System.out.println("[1.결제전 항목] [0.뒤로가기]");
+			int select = Shop.sc.nextInt();
+			if(select == 0) {
+				break;
+			}else if(select == 1) {
+				this.um.fullUserCarts();
+			}
+		}
+		
 	}
 	public void userManage() {
 		while(true) {

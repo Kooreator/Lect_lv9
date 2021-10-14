@@ -72,5 +72,9 @@ public class User {
 	public void userPrint() {
 		System.out.println(this.id+" : "+this.money);
 	}
+	public String  userInfo() {
+		String info = this.id+"/"+String.valueOf(this.money);
+		return info;
+	}
 
 }
