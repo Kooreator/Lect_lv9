@@ -9,9 +9,11 @@ import java.io.IOException;
 
 import shopModels.Cart;
 import shopModels.Category;
+import shopModels.Item;
 import shopModels.User;
 
 public class FileManager {
+	public static FileManager instance = new FileManager();
 	private String usersFile = "users.txt";
 	private String itemsFile = "items.txt";
 	private String categoryFile = "category.txt";
@@ -26,7 +28,7 @@ public class FileManager {
 		String data = "";
 		
 		for(int i=0; i<UserManager.instance.getUsers().size(); i++) {
-			data += UserManager.instance.getUsers().get(i).userInfo()+"/n";
+			data += UserManager.instance.getUsers().get(i).userInfo()+"/";
 		}
 		
 		try {
@@ -40,21 +42,26 @@ public class FileManager {
 		}
 	}
 	public void lodeUsers() {
-		try {
-			this.fr = new FileReader(this.usersFile);
-			this.br = new BufferedReader(fr);
-			String data = br.readLine();
-			while(data != null) {
-				String temp[] = data.split("/");
-				UserManager.instance.getUsers().add(new User(temp[0],Integer.parseInt(temp[1])));
-				data = br.readLine();
+		this.file = new File(this.usersFile);
+		if(this.file.exists()) {			
+			try {
+				this.fr = new FileReader(this.usersFile);
+				this.br = new BufferedReader(fr);
+				String data = br.readLine();
+				while(data != null) {
+					String temp[] = data.split("/");
+					for(int i=0; i<temp.length; i+=2) {
+						UserManager.instance.getUsers().add(new User(temp[i],Integer.parseInt(temp[i+1])));						
+					}
+					data = br.readLine();
+				}
+				
+				fr.close();
+				br.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			fr.close();
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	public void saveCategory() {
@@ -76,21 +83,24 @@ public class FileManager {
 		}
 	}
 	public void lodeCategory() {
-		try {
-			this.fr = new FileReader(this.categoryFile);
-			this.br = new BufferedReader(fr);
-			
-			String data = br.readLine();
-			String[] temp = data.split("/");
-			for(int i=0; i<temp.length; i++) {
-				CategoryManager.instance.getCategory().add(new Category(temp[0]));
-			}
-			
-			fr.close();
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		this.file = new File(this.categoryFile);
+		if(this.file.exists()) {
+			try {
+				this.fr = new FileReader(this.categoryFile);
+				this.br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				String[] temp = data.split("/");
+				for(int i=0; i<temp.length; i++) {
+					CategoryManager.instance.getCategory().add(new Category(temp[0]));
+				}
+				
+				fr.close();
+				br.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
 	}
 	public void saveCart() {
@@ -119,23 +129,26 @@ public class FileManager {
 		}
 	}
 	public void lodeCart() {
-		try {
-			this.fr = new FileReader(this.cartName);
-			this.br = new BufferedReader(fr);
-			
-			String data = br.readLine();
-			while(data != null) {
-				String[] temp  = data.split("/");
-				for(int i=1; i<temp.length; i+=2) {
-					UserManager.instance.getUsers().get(Integer.parseInt(temp[0])).getCart().add(new Cart(Integer.parseInt(temp[i]),temp[i+1]));						
+		this.file = new File(this.cartName);
+		if(this.file.exists()) {
+			try {
+				this.fr = new FileReader(this.cartName);
+				this.br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String[] temp  = data.split("/");
+					for(int i=1; i<temp.length; i+=2) {
+						UserManager.instance.getUsers().get(Integer.parseInt(temp[0])).getCart().add(new Cart(Integer.parseInt(temp[i]),temp[i+1]));						
+					}
+					data = br.readLine();
 				}
-				data = br.readLine();
-			}
-			fr.close();
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				fr.close();
+				br.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
 		}
 	}
 	public void saveItems() {
@@ -163,21 +176,46 @@ public class FileManager {
 		}
 	}
 	public void lodeItems() {
-		try {
-			this.fr = new FileReader(this.itemsFile);
-			this.br = new BufferedReader(fr);
-			
-			String data = br.readLine();
-//			while(data ) {
-//				
-//			}
-			
-			fr.close();
-			br.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		this.file = new File(this.itemsFile);
+		if(this.file.exists()) {
+			try {
+				this.fr = new FileReader(this.itemsFile);
+				this.br = new BufferedReader(fr);
+				
+				String data = br.readLine();
+				while(data != null) {
+					String[] temp = data.split("/");
+					for(int i=1; i<temp.length; i+=3) {
+						CategoryManager.instance.getCategory().
+						get(Integer.parseInt(temp[0])).getItems().add(new Item(temp[i],Integer.parseInt(temp[i+1]),temp[i+2]));
+					}
+					data = br.readLine();
+				}
+				
+				fr.close();
+				br.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+	}
+	public void save() {
+		saveUsers();
+		saveItems();
+		saveCategory();
+		saveCart();
+	}
+	public void lode() {
+		
+		lodeUsers();
+		lodeCategory();
+		lodeItems();
+		lodeCart();
+	}
+	public void run() {
+		save();
+		lode();
 	}
 
 }

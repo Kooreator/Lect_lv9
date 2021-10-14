@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import shopController.CategoryManager;
+import shopController.FileManager;
 import shopController.Manager;
 import shopController.UserManager;
 
@@ -14,7 +15,7 @@ public class Shop {
 	public static int log = -1;
 	
 	private void mainMenu() {
-		System.out.println("[1.가입] [2.탈퇴] [3.로그인] [4.로그아웃] [100.관리자]");
+		System.out.println("[1.가입] [2.탈퇴] [3.로그인] [4.로그아웃] [100.관리자] [1000.파일저장]");
 	}
 	public void selectMenu() {
 		int select = sc.nextInt();
@@ -35,6 +36,8 @@ public class Shop {
 			}
 		}else if(select == 100) {
 			Manager.instance.selectManageerMenu();
+		}else if(select == 1000) {
+			FileManager.instance.save();
 		}
 	}
 	public void mainSelectMenu() {
@@ -62,11 +65,15 @@ public class Shop {
 		}
 	}
 	public void run() {
-		CategoryManager.instance.init();
-		UserManager.instance.init();
+		FileManager.instance.lode();
+		if(UserManager.instance.getUsers().size()==0) {
+			CategoryManager.instance.init();
+			UserManager.instance.init();			
+		}
 		while(true){
 			mainMenu();
 			selectMenu();
+
 		}
 	}
 	
