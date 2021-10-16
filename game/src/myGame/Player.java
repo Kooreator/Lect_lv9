@@ -1,13 +1,13 @@
 package myGame;
 
 public class Player {
-	static int money;
-	static Guild guild = Guild.g;
-	static Inventory inven = Inventory.instance;
+	public static Player instance = new Player();
+	int money;
+	//Guild guild = Guild.g;
+	Inventory inventory = Inventory.instance;
 	
 	
 	public Player() {
-		guild.setGuild();
 		money = 100000;
 	}
 

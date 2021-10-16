@@ -14,6 +14,38 @@ public class Unit {
 	public void setItem(Item weapon, Item armor, Item ring ) {
 		this.weapon = weapon; this.armor = armor; this.ring = ring;
 	}
+	public String info() {
+		String info = this.name+"/"+this.level+"/"+this.hp+"/"+this.att+"/"
+	+this.def+"/"+this.exp+"/"+this.party;
+		return info;
+	}
+	public String weaponInfo() {
+		String info = "";
+		if(this.weapon==null) {
+			info = String.valueOf(this.weapon);
+		}else {
+			info = this.weapon.kind+"/"+this.weapon.name+"/"+this.weapon.power+"/"+this.weapon.price;			
+		}
+		return info;
+	}
+	public String armorInfo() {
+		String info = "";
+		if(this.armor==null) {
+			info = String.valueOf(this.armor);
+		}else {
+			info = this.armor.kind+"/"+this.armor.name+"/"+this.armor.power+"/"+this.armor.price;			
+		}
+		return info;
+	}
+	public String ringInfo() {
+		String info = "";
+		if(this.ring ==null) {
+			info = String.valueOf(this.ring);
+		}else {			
+			info = this.ring.kind+"/"+this.ring.name+"/"+this.ring.power+"/"+this.ring.price;
+		}
+		return info;
+	}
 	public String getName() {
 		return this.name;
 	}
@@ -76,18 +108,27 @@ public class Unit {
 	}
 	public void printUnitStatus() {
 		System.out.println("이름 : "+this.name+", 레벨 : "+this.level+", 파티유무 : "+this.party);
-		System.out.print("공격력 : "+this.att+", 방어력 : "+this.def);
+		if(this.weapon == null) {
+			System.out.print("공격력 : "+this.att);
+		}else {
+			System.out.print("공격력 : "+(this.att+this.weapon.power));
+		}
+		if(this.armor == null) {
+			System.out.print(", 방어력 : "+this.def);
+		}else {
+			System.out.print(", 방어력 : "+(this.def+this.armor.power));
+		}
 		if(ring == null) {
 			System.out.print(", 체력 : " + hp);
 		}
 		else {
-			System.out.print(", 체력 : " + hp + ring.power);
+			System.out.print(", 체력 : " + (hp + ring.power));
 		}	
 		if(ring == null) {
 			System.out.println("/" + maxHp);
 		}
 		else {
-			System.out.println("/" + maxHp + ring.power);
+			System.out.println("/" + (maxHp + ring.power));
 		}		
 	}
 	public void printEquitedItem() {

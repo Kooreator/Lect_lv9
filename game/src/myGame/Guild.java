@@ -51,6 +51,21 @@ public class Guild {
 			System.out.println("");
 		}
 	}
+	public void sortName() {
+		for(int i=0; i<this.guild.size(); i++) {
+			String first = this.guild.get(i).getName();
+			int idx = i;
+			for(int j=i; j<this.guild.size(); j++) {
+				if(first.compareTo(this.guild.get(j).getName())>0) {
+					first = this.guild.get(j).getName();
+					idx = j;
+				}
+			}
+			Unit temp = this.guild.get(i);
+			this.guild.set(i, this.guild.get(idx));
+			this.guild.set(idx, temp);
+		}
+	}
 	public void changePartyMember() {
 		printGuild();
 		System.out.print("제외할 파티원 번호 선택 : ");

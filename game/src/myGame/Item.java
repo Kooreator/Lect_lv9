@@ -20,5 +20,13 @@ public class Item {
 		info += this.kind+" : "+this.name+" : "+this.power+" : "+this.price;
 		return info;
 	}
+	public void print() {
+		System.out.println("이름 : "+this.kind+" 이름 : "+this.name+" 능력 : "+this.power+" 가격 : "+this.price);
+	}
+	public String Info() {
+		String info = "";
+		info += this.kind+"/"+this.name+"/"+this.power+"/"+this.price;
+		return info;
+	}
 
 }
