@@ -111,14 +111,51 @@ public class Guild {
 		System.out.println("길드원을 추가했습니다.");
 		System.out.println("========================================");
 	}
+	public void pickUpItem(int delete) {
+		if(this.guild.get(delete).getWeapon()!=null) {
+			Inventory.instance.getItems().add(this.guild.get(delete).getWeapon());
+		}
+		if(this.guild.get(delete).getArmor()!=null) {
+			Inventory.instance.getItems().add(this.guild.get(delete).getArmor());
+		}
+		if(this.guild.get(delete).getRing()!=null) {
+			Inventory.instance.getItems().add(this.guild.get(delete).getRing());
+		}
+	}
+	public boolean checkPartyMember() {
+		int check = 0; 
+		for(int i=0; i<this.guild.size(); i++) {
+			if(this.guild.get(i).getParty()) {
+				check ++;
+			}
+		}
+		if(check==4) {
+			return false; 
+		}else  {
+			return true;
+		}
+	}
+	public void addPartyMember() {
+		if(checkPartyMember()) {
+			int check = -1;
+			for(int i=0; i<this.guild.size(); i++) {
+				if(!this.guild.get(i).getParty()&&check != 1) {
+					this.guild.get(i).setParty(true);
+					check = 1;
+				}
+			}
+		}
+	}
 	public void delete() {
 		printGuild();
 		System.out.print("삭제할 길드원 번호를 입력하세요 : ");
 		int delete = g.sc.nextInt()-1;
 		if(0<=delete&&delete<this.guild.size()) {
 			System.out.println("[이름 : "+this.guild.get(delete).getName()+"] 길드원 삭제");
+			pickUpItem(delete);
 			this.guild.remove(delete);
 			System.out.println("========================================");
+			addPartyMember();
 		}
 	}
 

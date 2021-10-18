@@ -70,15 +70,6 @@ public class Unit {
 	public int getExp() {
 		return this.exp;
 	}
-	public Item getWeapon() {
-		return this.weapon;
-	}
-	public Item getArmor() {
-		return this.armor;
-	}
-	public Item getRing() {
-		return this.ring;
-	}
 	public void setParty(boolean party) {
 		this.party = party;
 	}
@@ -96,6 +87,15 @@ public class Unit {
 	}
 	public void setExp(int exp) {
 		this.exp += exp;
+	}
+	public Item getWeapon() {
+		return this.weapon;
+	}
+	public Item getArmor() {
+		return this.armor;
+	}
+	public Item getRing() {
+		return this.ring;
 	}
 	public void setWeapon(Item weapon) {
 		this.weapon = weapon;
