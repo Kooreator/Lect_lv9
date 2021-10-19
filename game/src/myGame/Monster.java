@@ -23,7 +23,7 @@ public class Monster {
 		this.def=def;
 	}
 	public void setHp(int hp) {
-		this.hp=hp;
+		this.hp=this.hp+hp;
 	}
 	public void print() {
 		System.out.printf("[공격력 %d] [방어력 %d] [HP %d]\n",this.att,this.def,this.hp);

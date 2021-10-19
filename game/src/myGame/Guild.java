@@ -31,6 +31,7 @@ public class Guild {
 		setParty();
 	}
 	public void setParty() {
+		this.party = new Unit[this.PARTY_SIZE];
 		int count = 0;
 		for(int i=0; i<this.guild.size(); i++) {
 			if(this.guild.get(i).getParty()) {
@@ -140,6 +141,17 @@ public class Guild {
 			int check = -1;
 			for(int i=0; i<this.guild.size(); i++) {
 				if(!this.guild.get(i).getParty()&&check != 1) {
+					this.guild.get(i).setParty(true);
+					check = 1;
+				}
+			}
+		}
+	}
+	public void addPartyMember(int j) {
+		if(checkPartyMember()) {
+			int check = -1;
+			for(int i=0; i<this.guild.size(); i++) {
+				if(j!=i&&!this.guild.get(i).getParty()&&check != 1) {
 					this.guild.get(i).setParty(true);
 					check = 1;
 				}

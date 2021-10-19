@@ -16,24 +16,57 @@ public class Battle {
 		while(true) {
 			printMonster();
 			Guild.g.printAllPartyMember();
-			System.out.println("1.공격 2.힐");
+			System.out.println("==========\n1.공격 2.힐\nselect : ");
 			int select = Guild.sc.nextInt();
 			if(select == 1) {
-				
+				if(this.monsters.size()>0) {
+					System.out.println("공격을 실행합니다.");
+					guildAttack();	
+					if(this.monsters.size()==0) {
+						break;
+					}
+				}
 			}else if(select == 2) {
-				
+				System.out.println("힐을 실행합니다.");
+				guildrecovery();
 			}
-			System.out.println("Monster에게 공격 당했습니다. !!");
-			monsterAttack();
+			if(this.monsters.size()>0) {
+				System.out.println("Monster에게 공격 당했습니다. !!");
+				monsterAttack();				
+			}
 		}
 	}
+	public void guildrecovery() {
+		for(int i=0; i<this.party.length; i++) {
+			this.party[i].setHp(this.party[i].getDef());
+		}
+		System.out.println("힐을 사용해 길드원들의 hp가 일부 회복되었습니다.");
+	}
 	public void guildAttack() {
-		
+		for(int i=0; i<this.party.length; i++) {
+			this.monsters.get(0).setHp(-this.party[i].getAtt());
+			if(this.monsters.get(0).getHp()<=0) {
+				System.out.println("몬스터사냥에 성공하였습니다.");
+				this.monsters.remove(0);
+			}
+		}
 	}
 	public void monsterAttack() {
 		int damage = this.monsters.get(0).getAtt();
 		for(int i=0; i<this.party.length; i++) {
-			this.party[i].setHp(damage);
+			this.party[i].setHp(-damage);
+			if(this.party[i].getHp()<=0) {
+				for(int j=0; j<Guild.g.getGuild().size(); j++) {
+					if(this.party[i].equals(Guild.g.getGuild().get(j))) {
+						System.out.println("[이름 : "+Guild.g.getGuild().get(j).getName()+"] 파티원 죽음");
+						Guild.g.pickUpItem(j);
+						Guild.g.getGuild().get(j).setParty(false);;
+						Guild.g.addPartyMember(j);
+						Guild.g.setParty();
+						System.out.println("========================================");
+					}
+				}
+			}
 		}
 	}
 	public void randomMonsterCreate() {
@@ -43,9 +76,11 @@ public class Battle {
 		this.monsters.add(new Monster(rNum1,rNum2,rNum3));
 	}
 	public void printMonster() {
+		System.out.println("====== 🐗Monster 두둥!!🐗 ======");
 		for(int i=0; i<this.monsters.size(); i++) {
 			this.monsters.get(i).print();
 		}
+		System.out.println("===============================");
 	}
 	public void selectBattleParty() {
 		System.out.println("");

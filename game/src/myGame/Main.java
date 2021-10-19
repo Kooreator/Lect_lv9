@@ -8,7 +8,8 @@ class MainGame{
 		System.out.println("======= 시작 ======\n[1.로드] [2.새 게임]\n");
 		int sel = Guild.g.sc.nextInt();
 		if(sel == 1) {
-			FileData.instance.lode();				
+			FileData.instance.lode();
+			Guild.g.setParty();
 		}else if(sel == 2) {
 			Guild.g.setGuild();
 		}
@@ -24,7 +25,7 @@ class MainGame{
 			}else if(select == 4) {
 				FileData.instance.save();
 			}else if(select == 5) {
-				
+				Battle.instance.hunting();
 			}else if(select == 0) {
 				break;
 			}
