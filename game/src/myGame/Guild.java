@@ -151,15 +151,17 @@ public class Guild {
 	public void addPartyMember(int j) {
 		if(checkPartyMember()) {
 			int check = -1;
-			for(int i=0; i<this.guild.size(); i++) {
-				if(j!=i&&!this.guild.get(i).getParty()&&check != 1) {
-					this.guild.get(i).setParty(true);
-					System.out.println("[이름 : "+Guild.g.getGuild().get(i).getName()+"] 파티원 추가");
+			while(check == -1) {
+				int rNum = Guild.rn.nextInt(this.guild.size());
+				if(j!=rNum&&!this.guild.get(rNum).getParty()&&check != 1) {
+					this.guild.get(rNum).setParty(true);
+					System.out.println("[이름 : "+Guild.g.getGuild().get(rNum).getName()+"] 파티원 추가");
 					check = 1;
-				}
+				}				
 			}
 		}
 	}
+	
 	public void delete() {
 		printGuild();
 		System.out.print("삭제할 길드원 번호를 입력하세요 : ");
