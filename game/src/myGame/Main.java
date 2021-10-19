@@ -23,10 +23,15 @@ class MainGame{
 				inventoryManage();
 			}else if(select == 4) {
 				FileData.instance.save();
+			}else if(select == 5) {
+				
 			}else if(select == 0) {
 				break;
 			}
 		}
+	}
+	public void battleManage() {
+		
 	}
 	public void inventoryManage() {
 		while(true) {
@@ -83,7 +88,7 @@ class MainGame{
 	}
 	public void printMenu() {
 		System.out.println("===================== [메인메뉴] ======================");
-		System.out.println("[1.길드관리] [2.상점] [3.인벤토리] [4.저장] [0.종료]");
+		System.out.println("[1.길드관리] [2.상점] [3.인벤토리] [4.저장] [5.전투참가] [0.종료]");
 		System.out.print("선택 : ");
 	}
 }
