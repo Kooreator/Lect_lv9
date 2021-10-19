@@ -62,7 +62,11 @@ public class Unit {
 		return this.maxHp;
 	}
 	public int getAtt() {
-		return this.att;
+		if(this.weapon==null) {
+			return this.att;			
+		}else {
+			return this.att+this.weapon.power;
+		}
 	}
 	public int getDef() {
 		return this.def; 
@@ -105,6 +109,20 @@ public class Unit {
 	}
 	public void setRing(Item ring ) {
 		this.ring = ring;
+	}
+	public void hpReset() {
+		this.hp=this.maxHp;
+	}
+	public void itemRelease() {
+		if(this.weapon!=null) {
+			this.weapon=null;
+		}
+		if(this.armor!=null) {
+			this.armor=null;
+		}
+		if(this.ring!=null) {
+			this.ring=null;
+		}
 	}
 	public void printUnitStatus() {
 		System.out.println("이름 : "+this.name+", 레벨 : "+this.level+", 파티유무 : "+this.party);

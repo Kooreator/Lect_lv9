@@ -122,6 +122,7 @@ public class Guild {
 		if(this.guild.get(delete).getRing()!=null) {
 			Inventory.instance.getItems().add(this.guild.get(delete).getRing());
 		}
+		this.guild.get(delete).itemRelease();;
 	}
 	public boolean checkPartyMember() {
 		int check = 0; 
@@ -153,6 +154,7 @@ public class Guild {
 			for(int i=0; i<this.guild.size(); i++) {
 				if(j!=i&&!this.guild.get(i).getParty()&&check != 1) {
 					this.guild.get(i).setParty(true);
+					System.out.println("[이름 : "+Guild.g.getGuild().get(i).getName()+"] 파티원 추가");
 					check = 1;
 				}
 			}

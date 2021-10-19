@@ -16,7 +16,7 @@ public class Battle {
 		while(true) {
 			printMonster();
 			Guild.g.printAllPartyMember();
-			System.out.println("==========\n1.공격 2.힐\nselect : ");
+			System.out.println("==========\n1.공격 2.힐 3.뒤로가기\nselect : ");
 			int select = Guild.sc.nextInt();
 			if(select == 1) {
 				if(this.monsters.size()>0) {
@@ -29,6 +29,9 @@ public class Battle {
 			}else if(select == 2) {
 				System.out.println("힐을 실행합니다.");
 				guildrecovery();
+			}else if(select == 3) {
+				this.monsters.remove(0);
+				break;
 			}
 			if(this.monsters.size()>0) {
 				System.out.println("Monster에게 공격 당했습니다. !!");
@@ -38,7 +41,13 @@ public class Battle {
 	}
 	public void guildrecovery() {
 		for(int i=0; i<this.party.length; i++) {
-			this.party[i].setHp(this.party[i].getDef());
+			if(this.party[i].getHp()<this.party[i].getMaxHp()) {
+				this.party[i].setHp(this.party[i].getDef());
+				if(this.party[i].getHp()>this.party[i].getMaxHp()) {
+					this.party[i].setHp(-this.party[i].getHp());
+					this.party[i].setHp(this.party[i].getMaxHp());
+				}
+			}
 		}
 		System.out.println("힐을 사용해 길드원들의 hp가 일부 회복되었습니다.");
 	}
@@ -48,6 +57,7 @@ public class Battle {
 			if(this.monsters.get(0).getHp()<=0) {
 				System.out.println("몬스터사냥에 성공하였습니다.");
 				this.monsters.remove(0);
+				break;
 			}
 		}
 	}
@@ -60,7 +70,10 @@ public class Battle {
 					if(this.party[i].equals(Guild.g.getGuild().get(j))) {
 						System.out.println("[이름 : "+Guild.g.getGuild().get(j).getName()+"] 파티원 죽음");
 						Guild.g.pickUpItem(j);
-						Guild.g.getGuild().get(j).setParty(false);;
+						this.party[i].setParty(false);
+						this.party[i].hpReset();
+						Guild.g.getGuild().get(j).setParty(false);
+						Guild.g.getGuild().get(j).itemRelease();
 						Guild.g.addPartyMember(j);
 						Guild.g.setParty();
 						System.out.println("========================================");
@@ -76,7 +89,7 @@ public class Battle {
 		this.monsters.add(new Monster(rNum1,rNum2,rNum3));
 	}
 	public void printMonster() {
-		System.out.println("====== 🐗Monster 두둥!!🐗 ======");
+		System.out.println("====== 🐗Monster !!🐗 ======");
 		for(int i=0; i<this.monsters.size(); i++) {
 			this.monsters.get(i).print();
 		}
