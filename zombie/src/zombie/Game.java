@@ -62,7 +62,7 @@ public class Game {
 	public void up() {
 		this.hero.setPos(this.hero.getPos()+1);
 		this.check = 0;
-		System.out.printf("[ 현재 층 : %d ]\n",this.hero.getPos());
+		//System.out.printf("[ 현재 층 : %d ]\n",this.hero.getPos());
 		int rNum = rn.nextInt(2);
 		init();
 		if(rNum == 0) {

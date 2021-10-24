@@ -103,12 +103,12 @@ public class Hero extends Unit implements battle{
 	public void recovery() {
 		int hp = this.game.getGame().rn.nextInt(300)+1;
 		super.setHp(getHp() + hp); 
-		System.out.printf("채력이 %d 증가했다.",hp);
+		System.out.printf("채력이 %d 증가했다.\n",hp);
 	}
 	public void upAttackingPower() {
 		int hp = game.getGame().rn.nextInt(20);
 		super.setAtt(getAtt()+hp);
-		System.out.printf("공격력 %d 증가했다",hp);
+		System.out.printf("공격력 %d 증가했다\n",hp);
 	}
 
 }
