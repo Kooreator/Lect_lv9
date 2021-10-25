@@ -68,6 +68,7 @@ public class Game {
 		if(rNum == 0) {
 			System.out.println("좀비등장");
 			run = 0;
+			
 			while(run == 0) {
 				this.hero.getHero().print();
 				System.out.println("==== vs ====");

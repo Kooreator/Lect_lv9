@@ -22,8 +22,8 @@ public class ZombieKing extends Unit implements battle{
 	public void setshield(int shield) {
 		this.shield = shield;
 	}
-	
-	public int attack(Unit unit) {
+	@Override
+	public int attack(Unit unit) { // 인터페이스 추상 메서드 구현
 		if(super.getPos()<20) {
 			int att = game.rn.nextInt(60)+1;
 			att+=super.getAtt();
@@ -40,7 +40,8 @@ public class ZombieKing extends Unit implements battle{
 		}
 		return 0;
 	}
-	public void print() {
+	@Override
+	public void print() {// 추상 클래스 추상 메서드 구현
 		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp()+"  [실드] : "+this.shield);
 		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
 	}

@@ -1,6 +1,6 @@
 package zombie;
 
-abstract class Unit {
+abstract class Unit {//추상 클래스
 	
 	private String name;  private int hp;
 	private int att;      private int def;
@@ -44,13 +44,10 @@ abstract class Unit {
 	public void setPos(int pos) {
 		this.pos = pos;
 	}
-	public abstract void print();
 	
-	public int attack(Unit unit) {
-		Hero.getInstance().attack(unit);
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public abstract void print(); //추상 메서드
+	
+	
 	
 
 }

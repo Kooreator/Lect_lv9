@@ -31,7 +31,8 @@ public class Hero extends Unit implements battle{
 	public void createHero() {
 		instance = new Hero("용사",100,5,1);
 	}
-	public int attack(Unit unit) {
+	@Override
+	public int attack(Unit unit) { // 인터페이스 추상 메서드 구현
 		if(super.getPos()<5) {
 			int att = game.rn.nextInt(30)+1;
 			att+=super.getAtt();
@@ -110,7 +111,7 @@ public class Hero extends Unit implements battle{
 
 
 	@Override
-	public void print() {
+	public void print() { //추상 클래스 추상메서드 구현
 		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp());
 		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
 		
