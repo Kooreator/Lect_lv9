@@ -92,10 +92,7 @@ public class Hero extends Unit implements battle{
 		return 0;
 	}
 	
-	@Override
-	public void print() {
-		super.print();		
-	}
+	
 	public void takeBottle() {
 		super.setHp(getHp()+300);
 		this.bottle--;
@@ -109,6 +106,14 @@ public class Hero extends Unit implements battle{
 		int hp = game.getGame().rn.nextInt(20);
 		super.setAtt(getAtt()+hp);
 		System.out.printf("공격력 %d 증가했다\n",hp);
+	}
+
+
+	@Override
+	public void print() {
+		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp());
+		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
+		
 	}
 
 }

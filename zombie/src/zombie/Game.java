@@ -95,7 +95,7 @@ public class Game {
 							if(run==0) {				        		
 				        		run = this.zombie.attack(this.hero.getInstance());
 				        	}
-						}else if(this.hero.getPos()<20) {
+						}else if(this.hero.getPos()<30) {
 							run = this.hero.attack(this.zombieKing.getInstance());
 							if(run==0) {				        		
 				        		run = this.zombie.attack(this.hero.getInstance());

@@ -58,12 +58,7 @@ public class Zombie extends Unit implements battle{
 		}
 		return 0;
 	}
-
-	
-	public void print() {
-		super.print();
-	}
-	public void creatNomalZombie() {
+	public void creatNomalZombie(){
 		int hp = game.rn.nextInt(25)+1;
 		instance = new Zombie("그냥좀비",hp,5,1);
 	}
@@ -74,6 +69,13 @@ public class Zombie extends Unit implements battle{
 	public void creatStrongZombie() {
 		int hp = game.rn.nextInt(100)+50;
 		instance = new Zombie("힘쎈 좀비",hp,20,10);
+	}
+
+	@Override
+	public void print() {
+		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp());
+		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
+		
 	}
 
 }
