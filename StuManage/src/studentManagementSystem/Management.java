@@ -19,5 +19,10 @@ public class Management {
 		return this.name;
 	}
 
+	public String getStuName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

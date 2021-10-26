@@ -1,6 +1,6 @@
 package studentManagementSystem;
 
-public class Student extends Management{
+public class Student extends Management implements print{
 	
 	public Student(String name, int num) {
 		super(name, num);

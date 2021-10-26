@@ -1,14 +1,29 @@
 package studentManagementSystem;
 
-public class Subject extends Management {
+public class Subject extends Management implements print{
 	
-	private String subName;
 	private int score;
-	private int stuNum;
 	
-	public Subject() {
-		super("",0);
-		this.score=0;
+	public Subject(String name, int num ,int score) {
+		super(name, num);
+		this.score = score;
+	}
+	
+	public int getScore() {
+		return this.score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	public String getStuName() {
+		return super.getName();
+	}
+	public int getStuNum() {
+		return super.getNum();
+	}
+	@Override
+	public void print() {
+		System.out.println(super.getName() + " : " + super.getNum() + " : " + this.score );
 	}
 
 }
