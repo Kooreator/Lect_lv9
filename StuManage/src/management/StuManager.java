@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import studentManagementSystem.Student;
 
-public class StuManager {
+public class StuManager implements Manager{
 	
 	Random rn = new Random();
 	Scanner sc = new Scanner(System.in);
@@ -20,17 +20,17 @@ public class StuManager {
 	public ArrayList<Student> getStudent(){
 		return this.students;
 	}
-	public void inrollmentStudent() {
+	public void inrollment() {
 		System.out.print("Student name : ");
 		String name = this.sc.next();
 		this.students.add(new Student(name, createStuNum()));
 	}
-	public void withdrawlStudent() {
+	public void withdrawal() {
 		print();
 		System.out.print("삭제할 학생의 학번 입력 : ");
 		int num = this.sc.nextInt();
-		if(check(num)!=-1) {
-			this.students.remove(check(num));			
+		if(check(String.valueOf(num))!=-1) {
+			this.students.remove(String.valueOf(num));			
 		}
 	}
 	public int createStuNum() {
@@ -48,18 +48,21 @@ public class StuManager {
 		}
 	}
 	public void print() {
+		System.out.println("==== 학생정보 현황 ====");
 		for(int i=0; i<this.students.size(); i++) {
 			this.students.get(i).print();
 		}
+		System.out.println("====================");
 	}
-	public int  check(int num) {
+	public int  check(String num) {
 		for(int i=0; i<this.students.size(); i++) {
-			if(this.students.get(i).getNum()== num) {
+			if(this.students.get(i).getNum()== Integer.parseInt(num)) {
 				return i;
 			}
 		}
 		return -1;
 	}
+	
 	
 	
 

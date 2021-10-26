@@ -13,7 +13,7 @@ public class Student extends Management implements print{
 		return super.getName();
 	}
 	public void print() {
-		System.out.println(super.getName() + " : " + super.getNum() );
+		System.out.println("이름 : "+super.getName() + ", 학번 : " + super.getNum() );
 	}
 
 }

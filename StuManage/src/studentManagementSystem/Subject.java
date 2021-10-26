@@ -23,7 +23,7 @@ public class Subject extends Management implements print{
 	}
 	@Override
 	public void print() {
-		System.out.println(super.getName() + " : " + super.getNum() + " : " + this.score );
+		System.out.println("과목명 : "+super.getName() + ", 학번 : " + super.getNum() + ", 점수 :  " + this.score );
 	}
 
 }
