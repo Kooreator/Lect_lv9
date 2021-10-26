@@ -7,12 +7,10 @@ abstract class Unit {//추상 클래스
 	private static int pos = 1;
 	Game game = Game.getInstance();
 	
-	
 	protected Unit() {}
 	public Unit(String name, int hp ,int att,int def ) {
 		this.name=name; this.hp=hp; this.att=att; this.def=def; 
 	}
-	
 	
 	public String getName() {
 		return this.name;

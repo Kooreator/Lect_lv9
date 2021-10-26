@@ -22,6 +22,19 @@ public class ZombieKing extends Unit implements battle{
 	public void setshield(int shield) {
 		this.shield = shield;
 	}
+	
+	@Override
+	public void print() {// 추상 클래스 추상 메서드 구현
+		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp()+"  [실드] : "+this.shield);
+		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
+	}
+	
+	public void creatZombieKing() {
+		int hp = game.rn.nextInt(200)+100;
+		this.shield = game.rn.nextInt(10)+1;
+		instance = new ZombieKing("좀비왕",hp,30,20,this.shield);
+	}
+
 	@Override
 	public int attack(Unit unit) { // 인터페이스 추상 메서드 구현
 		if(super.getPos()<20) {
@@ -39,15 +52,5 @@ public class ZombieKing extends Unit implements battle{
 			return 0;
 		}
 		return 0;
-	}
-	@Override
-	public void print() {// 추상 클래스 추상 메서드 구현
-		System.out.println("[이름] : "+super.getName()+"  [체력] : "+super.getHp()+"  [실드] : "+this.shield);
-		System.out.println("[공격력] : "+super.getAtt()+"   [방어력] : "+super.getDef()+"  [층] : "+super.getPos());
-	}
-	public void creatZombieKing() {
-		int hp = game.rn.nextInt(200)+100;
-		this.shield = game.rn.nextInt(10)+1;
-		instance = new ZombieKing("좀비왕",hp,30,20,this.shield);
 	}
 }
