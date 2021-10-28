@@ -28,14 +28,14 @@ public abstract class Unit {
 	}
 	void attack(Unit target) {
 		target.curhp -= power;
-		System.out.printf("[ %s ] 이 [ %s ] 에게 %d 의 데미지를 입힙니다.",this.name,target.name,this.power);
+		System.out.printf("[ %s ] 이 [ %s ] 에게 %d 의 데미지를 입힙니다.\n",this.name,target.name,this.power);
 		if(target.curhp <= 0) {
-			System.out.printf("[ %s ] 이 죽었습니다." );
+			System.out.printf("[ %s ] 이 죽었습니다.\n" ,target.name);
 			target.curhp = 0;
 		}
 	}
 	void printData() {
-		System.out.printf("[ %s ]  [ %d/%d ] [ %d ]",this.name,this.curhp,this.maxhp,this.power);
+		System.out.printf("[ %s ]  [ %d/%d ] [ %d ]\n",this.name,this.curhp,this.maxhp,this.power);
 	}
 
 }
