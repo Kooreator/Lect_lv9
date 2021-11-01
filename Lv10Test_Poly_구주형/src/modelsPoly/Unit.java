@@ -14,17 +14,42 @@ public abstract class Unit {
 		this.cur_hp = max_hp;
 		this.power = power;
 	}
-	void init(String name, int max_hp,int power){
+	public void init(String name, int max_hp,int power){
 		this.name = name;
 		this.cur_hp = max_hp;
 		this.max_hp = max_hp;
 		this.power = power;
 	}
 	
+	public String getName() {
+		return name;
+	}
+	public int getMax_hp() {
+		return max_hp;
+	}
+	public int getCur_hp() {
+		return cur_hp;
+	}
+	public int getPower() {
+		return power;
+	}
+	public Boolean getDie() {
+		return die;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setCur_hp(int cur_hp) {
+		this.cur_hp = cur_hp;
+	}
+	public void setDie(boolean die) {
+		this.die = die;
+	}
+	 
 	void print() {
 		System.out.printf("[이름 : %s] [hp : %d/%d] [power : %s]\n",this.name,this.cur_hp,this.max_hp,this.power);
 	}
-	void attack(Unit target) {
+	public void attack(Unit target) {
 		if(!target.die) {
 			target.cur_hp-=this.power;			
 			if(target.cur_hp <= 0) {

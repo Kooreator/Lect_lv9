@@ -4,9 +4,6 @@ import controllerPoly.GameManager;
 
 public class StageTitle extends Stage{
 	
-	
-	
-
 	@Override
 	public boolean update() {
 		System.out.println("==== RPG ====");

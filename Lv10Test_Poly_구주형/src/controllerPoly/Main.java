@@ -4,7 +4,8 @@ package controllerPoly;
 //소요 : 00:00
 public class Main {
 	public static void main(String[] args) {
-		
+		GameManager gm = GameManager.getInstance();
+		gm.play();
 	}
 
 }

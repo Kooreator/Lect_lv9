@@ -3,6 +3,9 @@ package controllerPoly;
 import java.util.ArrayList;
 import java.util.Random;
 
+import modelsPoly.Player;
+import modelsPoly.Unit;
+
 public class UnitManager {
 	
 	private static UnitManager instance;
@@ -22,6 +25,33 @@ public class UnitManager {
 			instance = new UnitManager();
 		}
 		return instance;
+	}
+	
+	public ArrayList<modelsPoly.Unit> getMonsters() {
+		return monsters;
+	}
+	public ArrayList<Player> getPlayers(){
+		return players;
+	}
+	
+	public void set_Monster(int size) {
+		
+		for(int i=0;i<size ; i++) {
+			int rNum = this.rn.nextInt(this.mons.length);
+			
+			try {
+				Class<?> clazz = Class.forName(path+this.mons[rNum]);
+				Object obj = clazz;
+				Unit temp = (Unit)obj;
+				int rHp = this.rn.nextInt(150);
+				int rPower = this.rn.nextInt(150);
+				temp.init(this.mons[rNum],rHp,rPower);
+				this.monsters.add(temp);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 	}
 	
 	
