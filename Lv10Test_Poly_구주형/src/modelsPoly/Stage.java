@@ -1,7 +1,7 @@
 package modelsPoly;
 
 public abstract class Stage {
-	abstract boolean update();
-	abstract void init();
+	public abstract boolean update();
+	public abstract void init();
 
 }

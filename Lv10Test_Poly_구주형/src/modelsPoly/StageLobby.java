@@ -13,7 +13,7 @@ public class StageLobby extends Stage{
 		if(sel == 1) {
 			GameManager.nextStage = "Battle";
 		}else{
-			GameManager.nextStage = "";
+			return true;
 		}
 		return false;
 	}

@@ -20,7 +20,6 @@ public abstract class Unit {
 		this.max_hp = max_hp;
 		this.power = power;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -55,9 +54,9 @@ public abstract class Unit {
 			if(target.cur_hp <= 0) {
 				target.cur_hp = 0;
 				target.die = true;
-				System.out.printf("[%s] 이 [%s] 에게 공격받아 죽었습니다.",target.name,this.name);
+				System.out.printf("[%s] 이 [%s] 에게 공격받아 죽었습니다.\n",target.name,this.name);
 			}else {
-				System.out.printf("[%s] 이 [%s] 에게 [%d]데미지를 주었습니다.",this.name,target.name,this.power);				
+				System.out.printf("[%s] 이 [%s] 에게 [%d]데미지를 주었습니다.\n",this.name,target.name,this.power);				
 			}
 		}
 	}

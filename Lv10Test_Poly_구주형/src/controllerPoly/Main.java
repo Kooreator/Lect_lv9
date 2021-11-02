@@ -5,7 +5,9 @@ package controllerPoly;
 public class Main {
 	public static void main(String[] args) {
 		GameManager gm = GameManager.getInstance();
-		gm.play();
+		if(gm.play()) {
+			System.out.println("game end");			
+		}
 	}
 
 }
