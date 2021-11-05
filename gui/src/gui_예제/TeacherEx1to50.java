@@ -37,10 +37,10 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 	private JLabel timer = new JLabel("READY");
 	private int ms;
 	private boolean isRun;
-	private int gameNum;
+	private int gameNum = 1;
 	
 	private final int SIZE = 5;
-	private JButton[][] map = new JButton[5][5];
+	private JButton[][] map = new JButton[SIZE][SIZE];
 	private int[][] front =new int[SIZE][SIZE];
 	private int[][] back = new int[SIZE][SIZE];
 	
@@ -51,6 +51,7 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 	private Color backC =new Color(135,170,170);
 	
 	public GamePanel() {
+		
 		setLayout(null);
 		setBounds(0,0,700,800);
 		
@@ -61,7 +62,6 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 		setMap();
 		
 		setResetButton();
-		
 	}
 	private void setResetButton() {
 		this.reset.setText("RESET");
@@ -122,16 +122,21 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 		
 		for(int i=0; i<SIZE; i++) {
 			for(int j=0; j<SIZE; j++) {
-				this.map[i][j] = new JButton();
+				this.map[i][j] = new JButton();//인스턴스만 존재(집터)
+				
 				// 버튼의 속성 설정
-				this.map[i][j].setBounds(x, y, 100, 100);
-				this.map[i][j].setText(this.front[i][j]+"");
+				this.map[i][j].setBounds(x, y, 100, 100);//크기&위치
+				
+				this.map[i][j].setText(this.front[i][j]+"");//간판
 				this.map[i][j].setFont(new Font("TheHung170",Font.PLAIN,20));
-				this.map[i][j].setForeground(Color.white);
-				//on mac 
-				this.map[i][j].setOpaque(true);
-				this.map[i][j].setBorderPainted(false);
+				this.map[i][j].setForeground(Color.WHITE);
 				this.map[i][j].setBackground(Color.GRAY);
+				
+				//on mac 
+				this.map[i][j].setOpaque(true);//버튼 테두리
+				this.map[i][j].setBorderPainted(false);//버튼 배경
+				
+				//초인종 달음 (버튼의 반응 ActionListener를 통해 actionPerformed()메소드를 오버라이딩 함)
 				this.map[i][j].addActionListener(this);
 				
 				add(this.map[i][j]);
@@ -142,6 +147,8 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 			y+= 100+3;
 		}
 	}
+	
+	//초인종이 눌리면 -> 어떤 반응을 보일지를 설계
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() instanceof JButton) {
@@ -181,12 +188,12 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 						}
 					}
 				}
-				
 			}
-			
 		}
 	}
 	private void resetGame() {
+		this.gameNum = 0;
+		
 		isRun = false;
 		this.ms = 0;
 		this.timer.setText("READY");
@@ -200,7 +207,6 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 		}
 	}
 	private boolean winCheck() {
-		boolean check = false;
 //		for(int i=0; i<SIZE; i++) {
 //			for(int j=0; j<SIZE; j++) {
 //				if(this.front[i][j] != 0) {
@@ -213,8 +219,6 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 		}else {
 			return true;
 		}
-	
-		
 	}
 	public void run() {
 		while(true) {
@@ -222,6 +226,7 @@ class GamePanel extends JPanel implements ActionListener,Runnable{
 				this.ms ++;
 				this.timer.setText(String.format("%5d.%3d",this.ms/1000,this.ms%1000 ));				
 			}
+			
 			try {
 				Thread.sleep(1);
 			} catch (Exception e2) {
