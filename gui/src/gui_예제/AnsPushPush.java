@@ -71,8 +71,9 @@ class PushPanel extends JPanel implements ActionListener,MouseListener{
 	private NemoPush nemo2 = null;
 	
 	private int dir; // 1left 2down 3right 4up
-	
 	private boolean isMoving ;
+	
+	private boolean check;
 	
 	public PushPanel() {
 		setLayout(null);
@@ -93,18 +94,19 @@ class PushPanel extends JPanel implements ActionListener,MouseListener{
 		
 		this.nemo1 = new NemoPush(rX, rY, 100, 100);
 		
+		//nemo2는 nemo 1과 겹쳐지지 않는다.
 		while(true) {
-			rX = rn.nextInt(SIZE - 100);
-			rY = rn.nextInt(SIZE - 100);
+			rX = rn.nextInt(SIZE - 100 -100);
+			rY = rn.nextInt(SIZE - 100 -100);
 			
-			boolean check = false;
-			///////////////////////////////
 			
-			if(!check) {
-				this.nemo2 = new NemoPush(rX, rY, 100, 100);
+			//검증
+			if((rX + this.nemo1.getWidth() < this.nemo1.getX() || rX > this.nemo1.getX() +this.nemo1.getWidth())
+			||rY+this.nemo1.getY() <this.nemo1.getY() ||rY > this.nemo1.getY()+this.nemo1.getHeight()) {
 				break;
 			}
 		}
+		this.nemo2 = new NemoPush(rX, rY, 100, 100);
 		
 		// check 
 		
@@ -141,16 +143,18 @@ class PushPanel extends JPanel implements ActionListener,MouseListener{
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(Color.black);
-		g.drawRect(this.nemo1.getX(), this.nemo1.getY(), this.nemo1.getWidth(), this.nemo1.getHeight());
 		
-//		//draw Rect
-//		if(this.nemo1 != null && this.nemo2 != null) {
-//			g.setColor(Color.black);
-//			g.drawRect(this.nemo1.getX(), this.nemo1.getY(), this.nemo1.getWidth(), this.nemo1.getHeight());
-//			g.setColor(Color.blue);
-//			g.drawRect(this.nemo2.getX(), this.nemo2.getY(), this.nemo2.getWidth(), this.nemo2.getHeight());
-//		}
+//		draw Rect
+		if(this.nemo1 != null && this.nemo2 != null) {
+			g.setColor(Color.black);
+			g.drawRect(this.nemo1.getX(), this.nemo1.getY(), this.nemo1.getWidth(), this.nemo1.getHeight());
+			if(this.check) {
+				g.setColor(Color.red);
+			}else {
+				g.setColor(Color.blue);
+				g.drawRect(this.nemo2.getX(), this.nemo2.getY(), this.nemo2.getWidth(), this.nemo2.getHeight());				
+			}
+		}
 		while(this.isMoving)
 			    update();
 		
@@ -189,22 +193,82 @@ class PushPanel extends JPanel implements ActionListener,MouseListener{
 
 	private void update() {
 		if(this.dir==LEFT) {
-			this.nemo1.setX(this.nemo1.getX()-1);
+			if(!this.check&& this.nemo1.getX() > 0 || this.check && this.nemo2.getX() > 0 && this.nemo1.getX()>this.nemo2.getX()) {
+				this.nemo1.setX(this.nemo1.getX()-1);				
+			}
 		}else if(this.dir ==DOWN) {
-			this.nemo1.setY(this.nemo1.getY()+1);
+			if(!this.check && this.nemo1.getY() < SIZE-this.nemo1.getHeight() || check && this.nemo2.getY() < SIZE - this.nemo2.getHeight() ) {
+				this.nemo1.setY(this.nemo1.getY()+1);				
+			}
 		}else if(this.dir==RIGHT) {
-			this.nemo1.setX(this.nemo1.getX()+1);
+			if(!this.check&& this.nemo1.getX() < SIZE - this.nemo1.getWidth() || check && this.nemo2.getX() < SIZE - this.nemo2.getWidth()) {
+				this.nemo1.setX(this.nemo1.getX()+1);				
+			}
 		}else if(this.dir==UP) {
-			this.nemo1.setY(this.nemo1.getY()-1);
+			if(!this.check&& this.nemo1.getY() > 0 || check && this.nemo2.getY() > 0) {
+				this.nemo1.setY(this.nemo1.getY()-1);				
+			}
 		}
+		checkSecond();
+	}
+
+
+	private void checkSecond() {
 		
+		if(this.dir == LEFT) {
+			if(this.nemo2.getX()+this.nemo2.getWidth() >= this.nemo1.getX() &&
+					this.nemo2.getY() > this.nemo1.getY() - this.nemo1.getHeight() &&
+					this.nemo2.getY() < this.nemo1.getY() + this.nemo1.getHeight()) {
+					// && this.nemo2.getY() > 0) {
+				if(this.nemo2.getX() > 0){
+					this.nemo2.setX(this.nemo2.getX()-1);					
+				}
+				this.check = true;
+			}	
+		}
+		else if(this.dir ==DOWN) {
+			if(this.nemo2.getY() <= this.nemo1.getY() + this.nemo1.getHeight() &&
+					this.nemo2.getX() > this.nemo1.getX() - this.nemo1.getWidth() &&
+					this.nemo2.getX() < this.nemo1.getX() + this.nemo1.getWidth() ) {
+					//&&this.nemo2.getY() < SIZE - this.nemo2.getHeight()) {
+				
+				if(this.nemo2.getY() <SIZE - this.nemo2.getWidth()) {
+					this.nemo2.setY(this.nemo2.getY()+1);
+				}
+				this.check = true;
+			}
+		}
+		else if(this.dir==RIGHT) {
+			if(this.nemo2.getX() <= this.nemo1.getX() +this.nemo1.getWidth() &&
+					this.nemo2.getY() > this.nemo1.getY() - this.nemo1.getHeight() &&
+					this.nemo2.getY() < this.nemo1.getY() + this.nemo1.getHeight() ) {
+					// &&this.nemo2.getX() < SIZE - this.nemo2.getWidth()) {
+				if(this.nemo2.getX() < SIZE - this.nemo2.getWidth()) {
+					this.nemo2.setX(this.nemo2.getX()+1);					
+				}
+				this.check = true;
+			}
+		}
+		else if(this.dir==UP) {
+			if(this.nemo2.getY() + this.nemo2.getHeight() >= this.nemo1.getY() &&
+					this.nemo2.getX() > this.nemo1.getX() - this.nemo1.getWidth() &&
+					this.nemo2.getX() < this.nemo1.getX() + this.nemo1.getWidth() ) {
+					// &&this.nemo2.getX() > 0) {
+				if(this.nemo2.getY() > 0) {
+					this.nemo2.setY(this.nemo2.getY()-1);					
+				}
+				this.check = true;
+			}
+		}else {
+			this.check = false;
+		}
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.isMoving = false;
-		
+		this.check = false;
 	}
 
 	@Override
@@ -224,6 +288,7 @@ class PushPanel extends JPanel implements ActionListener,MouseListener{
 	
 }
 class PushPush extends JFrame{
+	
 	public PushPush() {
 		setLayout(null);
 		setBounds(50, 50, 700, 700);
@@ -235,11 +300,11 @@ class PushPush extends JFrame{
 		setVisible(true);
 		revalidate();
 	}
+	
 }
 
 public class AnsPushPush {
 	public static void main(String[] args) {
 		PushPush pp = new PushPush();
 	}
-
 }
