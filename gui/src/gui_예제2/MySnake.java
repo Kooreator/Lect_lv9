@@ -85,6 +85,7 @@ class SnakePanel extends JPanel implements KeyListener{
 		setButton();
 		setMap();
 		setUnit();
+		//setItem();
 		
 		setFocusable(true);
 		addKeyListener(this);
