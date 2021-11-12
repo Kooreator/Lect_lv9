@@ -64,8 +64,6 @@ class MMLPanel2 extends JPanel implements MouseMotionListener,MouseListener{
 	private MMLNemo2 nemo = null ;
 	private int gapW, gapH;
 	
-	private MMLNemo2[][] map = new MMLNemo2[3][3];
-	
 	public MMLPanel2() {
 		setLayout(null);
 		setBounds(0, 0, 700, 700);
@@ -95,11 +93,6 @@ class MMLPanel2 extends JPanel implements MouseMotionListener,MouseListener{
 		this.nemo = new MMLNemo2(x,y,100,100,Color.blue);
 		
 	}
-
-	
-	//1. 클릭되는 순간 마우스의 좌표를 기억 (패널 안에서 의 좌표)
-	//2. 1번을 수행하면서 nemo와 클릭된 자표를 비교해 기억
-	//3. 1,2번을 토대로 nemo를 repaint???
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
