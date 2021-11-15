@@ -2,9 +2,12 @@ package gui_MouseMotion;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -52,74 +55,61 @@ class RectNemo {
 	}
 	
 }
-class RectPanel extends JPanel implements MouseListener,MouseMotionListener {
+class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
 	
-	private int sX,sY;  private int fX,fY;
+	private int sX,sY; 
 	private RectNemo rect = null;
-	private int x,y,w,h;
-	
+	private boolean shift;
+	private ArrayList<RectNemo> rectList = new ArrayList<RectNemo>();
 	
 	public RectPanel(){
 		setLayout(null);
 		setBounds(0, 0, 700, 700);
 		
-		
-		setNemo();
-		
-		setVisible(true);
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		
+		setFocusable(true);
+		addKeyListener(this);
 	}
 
-	private void setNemo() {
-		RectNemo rect = new RectNemo(this.x, this.y, this.w, this.h,Color.red);
-		this.rect = rect;
-		
-	}
 	@Override
 	protected void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
 		
 		RectNemo r = this.rect;
 		
-		g.setColor(r.getC());
-		g.drawRect(r.getX(), r.getY(), r.getW(), r.getH());
+		if(r != null) {			
+			g.setColor(r.getC());
+			g.drawRect(r.getX(), r.getY(), r.getW(), r.getH());
+		}
 		
+		requestFocusInWindow();
 		repaint();
+		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		this.fX = e.getX();
-		this.fY = e.getY();
-		while(true) {
-			if(this.sX >= this.fX ) {
-				if(this.sY > this.fY) {
-					this.x = this.fX;
-					this.y = this.fY;
-					this.w = this.sX - this.fX;
-					this.h = this.sY - this.fY;
-				}else if(this.sY < this.fY) {
-					this.x = this.fX;
-					this.y = this.fY;
-					this.w = this.sX - this.fX;
-					this.h = this.fY - this.sY;
-				}
-			}else if(this.sX <= this.fX) {
-                if(this.sY < this.fY) {
-                	this.x = this.sX;
-                	this.y = this.sY;
-                	this.w = this.fX - this.sX;
-                	this.h = this.fY - this.sY;
-				}else if(this.sY > this.fY) {
-					this.x = this.sX;
-					this.y = this.fY;
-					this.w = this.fX - this.sX;
-					this.h = this.sY - this.fY;
-				}
-			}
-			//setNemo();
-		}
+		int x = e.getX();
+		int y = e.getY();
+		
+		int w = Math.abs(x - this.sX);
+		int h = Math.abs(y - this.sY);
+		
+		if(this.shift)
+			w = h;
+		
+		int rX = this.sX;
+		int rY = this.sY;
+		
+		if(x < this.sX)
+			rX = this.sX - w;
+		if(y < this.sY)
+			rY = this.sY - h;
+		
+		this.rect = new RectNemo(rX,rY,w,h,Color.red);
 	}
 	@Override
 	public void mouseMoved(MouseEvent e) {
@@ -136,6 +126,7 @@ class RectPanel extends JPanel implements MouseListener,MouseMotionListener {
 	}
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		this.rect.setC(Color.blue);
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -144,6 +135,25 @@ class RectPanel extends JPanel implements MouseListener,MouseMotionListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_SHIFT) {
+			this.shift = true;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_SHIFT) {
+			this.shift = false;
+		}
 	}
 }
 class RectFrame extends JFrame {

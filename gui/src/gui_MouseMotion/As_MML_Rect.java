@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -57,6 +58,7 @@ class RectPanel2 extends MyUtill {
 	private RectNemo2 rect = null;
 	private int sX, sY;
 	private boolean shift;
+	private ArrayList<RectNemo2> rectList2 = new ArrayList<RectNemo2>();
 	
 	public RectPanel2(){
 		setLayout(null);
@@ -69,9 +71,9 @@ class RectPanel2 extends MyUtill {
 		addKeyListener(this);
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
+		
 		super.paintComponent(g);
 		
 		if(this.rect != null) {
@@ -81,6 +83,7 @@ class RectPanel2 extends MyUtill {
 		
 		requestFocusInWindow();
 		repaint();
+		
 	}
 	@Override
 	public void keyPressed(KeyEvent e) {

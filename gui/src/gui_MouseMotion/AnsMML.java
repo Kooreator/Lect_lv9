@@ -97,9 +97,6 @@ class MMLPanel2 extends JPanel implements MouseMotionListener,MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		
-		
-		
 	}
 	@Override
 	public void mousePressed(MouseEvent e) {
