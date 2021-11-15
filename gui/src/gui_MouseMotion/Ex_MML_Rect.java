@@ -2,6 +2,8 @@ package gui_MouseMotion;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -9,6 +11,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -55,16 +58,27 @@ class RectNemo {
 	}
 	
 }
-class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener {
+class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyListener,ActionListener {
 	
 	private int sX,sY; 
 	private RectNemo rect = null;
 	private boolean shift;
-	private ArrayList<RectNemo> rectList = new ArrayList<RectNemo>();
+	private ArrayList<RectNemo> rects = new ArrayList<RectNemo>();
+	private ArrayList<RectNemo> circles = new ArrayList<RectNemo>();
+	
+	String[] btnText = {"ㅁ","ㅇ","ㅅ"};
+	JButton[] btn = new JButton[3];
+	private int type ;
+	
+	private final int RECTANGLE = 0;
+	private final int CIRCLE = 1;
+	private final int TRIANGLE = 2;
 	
 	public RectPanel(){
 		setLayout(null);
 		setBounds(0, 0, 700, 700);
+		
+		setButton();
 		
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -73,16 +87,67 @@ class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyL
 		addKeyListener(this);
 	}
 
+	private void setButton() {
+		int x = 30;
+		int y = 50;
+		
+		for(int i= 0; i<this.btn.length; i++) {
+			this.btn[i] = new JButton();
+			this.btn[i].setBounds(x, y, 50, 50);
+			this.btn[i].setText(this.btnText[i]);
+			this.btn[i].addActionListener(this);
+			add(this.btn[i]); 
+			
+			y += 50+3;
+		}
+		
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		
 		super.paintComponent(g);
 		
+		//sample triangle
+		//g.drawPolygon(int [],int [],int)
+		// 1.x 좌표의 배열  2.y좌표의 배열 3.꼭지점 개수
+		int[] xx = new int[3];
+		int[] yy = new int[3];
+		xx[0] = 100;
+		yy[0] = 100;
+		xx[1] = 150;
+		yy[1] = 200;
+		xx[2] = 50;
+		yy[2] = 200;
+		g.setColor(Color.green);
+		g.drawPolygon(xx,yy,3);
+		
+		
 		RectNemo r = this.rect;
 		
 		if(r != null) {			
 			g.setColor(r.getC());
-			g.drawRect(r.getX(), r.getY(), r.getW(), r.getH());
+			
+			if(this.type == RECTANGLE) {
+				g.drawRect(r.getX(), r.getY(), r.getW(), r.getH());
+			}else if(this.type == CIRCLE) {
+				g.drawRoundRect(r.getX(), r.getY(), r.getW(), r.getH(),r.getW(),r.getH());
+			}else if(this.type == TRIANGLE) {
+				
+			}
+			
+		}
+		//rects
+		for(int i=0; i<this.rects.size(); i++) {
+			RectNemo n = this.rects.get(i);
+			g.setColor(n.getC());
+			g.drawRect(n.getX(),n.getY(),n.getW(),n.getH());
+		}
+		//circles
+		for(int i=0; i<this.circles.size(); i++) {
+			RectNemo n = this.circles.get(i);
+			g.setColor(n.getC());
+			g.drawRoundRect(n.getX(), n.getY(), n.getW(), n.getH(), n.getW(), n.getH());
 		}
 		
 		requestFocusInWindow();
@@ -127,6 +192,18 @@ class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyL
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.rect.setC(Color.blue);
+		
+		if(this.type == RECTANGLE) {
+			this.rects.add(this.rect);
+			
+		}else if(this.type == CIRCLE) {
+			this.circles.add(this.rect);
+			
+		}else if(this.type == TRIANGLE) {
+			
+		}
+		this.rect = null;
+		
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
@@ -154,6 +231,20 @@ class RectPanel extends JPanel implements MouseListener,MouseMotionListener,KeyL
 		if(e.getKeyCode() == e.VK_SHIFT) {
 			this.shift = false;
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == this.btn[RECTANGLE]) {
+			this.type = RECTANGLE;
+		}
+		else if(e.getSource() == this.btn[CIRCLE]) {
+			this.type = CIRCLE;
+		}
+		else if(e.getSource() == this.btn[TRIANGLE]) {
+			this.type = TRIANGLE;
+		}
+		
 	}
 }
 class RectFrame extends JFrame {
