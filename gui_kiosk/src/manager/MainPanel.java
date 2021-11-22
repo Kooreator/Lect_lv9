@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
 
@@ -21,6 +22,17 @@ public class MainPanel extends Utill{
 	MenuImage[][] coffee = new MenuImage[4][4];
 	JTable table = new JTable();
 	
+	JButton coffeeB =new JButton();
+	JButton tea = new JButton();
+	JButton payment = new JButton();
+	JButton reset = new JButton();
+	
+	JLabel oTotal = new JLabel("주문 총 수량");
+	JLabel pTotal = new JLabel("주문 총액");
+	JLabel ot = new JLabel();
+	JLabel pt = new JLabel();
+	
+	
 	public MainPanel() {
 		setLayout(null);
 		setBounds(0, 0, 700, 800);
@@ -28,8 +40,10 @@ public class MainPanel extends Utill{
 		setButton();
 		setMenuImage();
 		setTable();
+		setLabel();
 		
 	}
+
 
 	private void setTable() {
 		this.colName.add("Name");
@@ -68,26 +82,58 @@ public class MainPanel extends Utill{
 		}
 		
 	}
+	private void setLabel() {
+		
+		this.oTotal.setBounds(ALLBITS, ABORT, WIDTH, HEIGHT);
+		this.pTotal.setBounds(ALLBITS, ABORT, WIDTH, HEIGHT);
+		this.ot.setText(getTotal());
+		
+		
+	}
+
+	private String getTotal() {
+		int total = 0;
+		for(int i=0; i<this.order.size(); i++) {
+			for(int j=0; j<this.order.get(i).size(); j++) {
+				
+			}
+		}
+		return null;
+	}
+
 
 	private void setButton() {
 		
-		JButton coffee =new JButton();
-		JButton tea = new JButton();
-		
-		coffee.setText("커피");
-		coffee.setBounds(270, 10, 50, 20);
-		coffee.addActionListener(this);
-		add(coffee);
+		coffeeB.setText("커피");
+		coffeeB.setBounds(270, 10, 50, 20);
+		coffeeB.addActionListener(this);
+		add(coffeeB);
 		
 		tea.setText("티&에이드");
 		tea.setBounds(330, 10, 80, 20);
 		tea.addActionListener(this);
 		add(tea);
+		
+		payment.setText("결제하기");
+		payment.setBounds(ALLBITS, ABORT, WIDTH, HEIGHT);
+		payment.addActionListener(this);
+		add(payment);
+		
+		reset.setText("초기화");
+		reset.setBounds(ALLBITS, ABORT, WIDTH, HEIGHT);
+		reset.addActionListener(this);
+		add(reset);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
+		
+		if(e.getSource() == this.reset) {
+			
+		}else if(e.getSource() == this.payment) {
+			
+		}
 		
 	}
 	@Override
