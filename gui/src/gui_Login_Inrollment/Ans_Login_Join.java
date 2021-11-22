@@ -1,9 +1,11 @@
 package gui_Login_Inrollment;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -11,7 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 class JoinFrame extends JFrame{
 	
@@ -62,33 +67,78 @@ class Ans_Panel extends JPanel implements KeyListener,ActionListener{
 	private JButton inrollment = new JButton();
 	
 	private Vector<Vector<String>> usersInfo = new Vector<>();
+	private Vector<String> colName = null;
 	
 	private Inrollment inrollFrame ;
 	private Login loginFrame;
 	
 	private JoinFrame joinFrame = null;
 	
+	JTable table = null;
+	
+	
 	public Ans_Panel() {
 		setLayout(null);
-		setBounds(0, 0, 700, 600);
+		setBounds(0, 0, 400, 600);
+		
+		setTable();
 		
 		setButton();
 		
+		//init();
 	}
 	
+	private void init() {
+		Random  rn = new Random();
+		
+		String[] front = {"김","이","박","정","오"};
+		String[] back1 = {"성","지","우","아","희"};
+		String[] back2 = {"연","무","안","용","이"};
+		
+		for(int i=0; i<100; i++) {
+			Vector<String> user = new Vector<String>();
+			String name = front[rn.nextInt(front.length)] + back1[rn.nextInt(back1.length)] + back2[rn.nextInt(back2.length)];
+			user.add(name);
+			user.add(i+"");
+			user.add(i+"");
+			this.usersInfo.add(colName);
+		}
+		
+	}
+
+	private void setTable() {
+		this.colName = new Vector<String>();
+		this.colName.add("id");
+		this.colName.add("pw");
+		this.colName.add("name");
+		
+		table = new JTable(usersInfo, colName);
+		table.setBounds(50, 50, 300, 300);
+		
+		table.setBorder(new LineBorder(Color.red));
+		table.setGridColor(Color.black);
+		
+		//add(table);
+		
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(50, 50, 300, 300);
+		js.setAutoscrolls(true); //default 
+		add(js);
+	}
+
 	public Vector<Vector<String>> getUsersInfo (){
 		return this.usersInfo;
 	}
 
 	private void setButton() {
 		
-		this.login.setBounds(100, 100, 100, 100);
+		this.login.setBounds(100, 380, 100, 50);
 		this.login.setText("Login");
 		this.login.setVisible(true);
 		this.login.addActionListener(this);
 		add(this.login);
 		
-		this.inrollment.setBounds(210,100,100,100);
+		this.inrollment.setBounds(210,380,100,50);
 		this.inrollment.setText("Inrollment");
 		this.inrollment.setVisible(true);
 		this.inrollment.addActionListener(this);
@@ -156,6 +206,9 @@ class Ans_Panel extends JPanel implements KeyListener,ActionListener{
 			System.out.println("회원가입 완료");
 			System.out.println("user.size() :" + this.usersInfo.size());
 			
+			table.revalidate();
+			table.repaint();
+			
 			this.joinFrame.dispose(); //프레임에 대한 창 닫기 처리
 		}
 		else {
@@ -185,7 +238,7 @@ public class Ans_Login_Join extends JFrame{
 	public Ans_Login_Join() {
 		setLayout(null);
 		setTitle("L&J");
-		setBounds(100,100,410,350);
+		setBounds(100,100,400,600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		add(new Ans_Panel());

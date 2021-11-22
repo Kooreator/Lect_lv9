@@ -88,13 +88,15 @@ public class Play  extends SokobanUtill{
 	}
 
 	private void move(int x, int y, int xx, int yy) {
+		
 		System.out.println("move");
+		
 		int check = -1;
 		for (int i = 2; i < this.gameBoard.length - 2; i++) {
 			for (int j = 2; j < this.gameBoard[i].length - 2; j++) {
 
 				if (this.gameBoard[i][j].getNum() == 3 && check == -1) {
-					System.out.println("asdf");
+					System.out.println(this.gameBoard[i][j].getNum());
 					check = 1;
 
 					if (this.gameBoard[i+x][j+y].getNum() != 2) {
