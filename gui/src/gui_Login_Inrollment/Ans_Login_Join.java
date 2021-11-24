@@ -28,6 +28,8 @@ class JoinFrame extends JFrame{
 	JTextField pwField = new JTextField();
 	JTextField nameField = new JTextField();
 	
+	
+	
 	public JoinFrame() {
 		setLayout(null);
 		setBounds(200,200,300,400);
@@ -85,7 +87,7 @@ class Ans_Panel extends JPanel implements KeyListener,ActionListener{
 		
 		setButton();
 		
-		//init();
+		init();
 	}
 	
 	private void init() {
@@ -107,6 +109,7 @@ class Ans_Panel extends JPanel implements KeyListener,ActionListener{
 	}
 
 	private void setTable() {
+		
 		this.colName = new Vector<String>();
 		this.colName.add("id");
 		this.colName.add("pw");
@@ -124,6 +127,7 @@ class Ans_Panel extends JPanel implements KeyListener,ActionListener{
 		js.setBounds(50, 50, 300, 300);
 		js.setAutoscrolls(true); //default 
 		add(js);
+		
 	}
 
 	public Vector<Vector<String>> getUsersInfo (){
