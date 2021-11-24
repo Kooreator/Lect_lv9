@@ -1,5 +1,9 @@
 package models;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
@@ -7,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import manager.MainFrame;
 import manager.MenuImage;
@@ -16,11 +21,10 @@ class PaymentPanel extends Utill{
 	
 	MenuImage[] mi = new MenuImage[4];
 	
-	JLabel mention = null;
-	JLabel stayLabel = null;
-	JLabel hereLabel = null;
-	JLabel cashLabel = null;
-	JLabel cardLabel = null;
+	boolean stayCheck;
+	boolean hereCheck;
+	boolean cashCheck;
+	boolean cardCheck;
 	
 	JButton stay = null;
 	JButton here = null;
@@ -34,48 +38,56 @@ class PaymentPanel extends Utill{
 		setLayout(null);
 		setBounds(0, 0, 600, 700);
 		
-		setLabel();
 		setImage();
 		setButton();
 		
 	}
 
-	private void setLabel() {
-		this.mention = new JLabel(MainFrame.cost+" : 드시고 가시겠습니까 ? ");
-		this.mention.setBounds(50, 20, 500, 30);
-		add(this.mention);
-		this.stayLabel = new JLabel("먹고갈래요");
-		this.stayLabel.setBounds(10, 60, 250, 50);
-		add(this.stayLabel);
-		this.hereLabel = new JLabel("포장할래요");
-		this.hereLabel.setBounds(310, 60, 250, 50);
-		add(this.hereLabel);
-		this.cashLabel = new JLabel("현금결제");
-		this.cashLabel.setBounds(10, 120, 250, 50);
-		add(this.cashLabel);
-		this.cardLabel = new JLabel("카드결제");
-		this.cardLabel.setBounds(310, 120, 250, 50);
-		add(this.cardLabel);
-	}
+	
 
 	private void setImage() {
-		int x = 260; int y = 60;
+		int x = 100; int y = 100;
 		String path = "images_kiosk/";
-		String blank = "blank_mark.png";
+		String stay = "1stay.png";
+		String here = "2here.png";
+		String cash = "3cash.png";
+		String card = "4card.png";
 		String mark = "ok_mark.png";
 		
-		this.mi[0] = new MenuImage(x, y, 40, 50, 0, path+blank);
-		x = 560;
-		this.mi[1] = new MenuImage(x, y, 40, 50, 0, path+blank);
-		x = 260; y = 120;
-		this.mi[2] = new MenuImage(x, y, 40, 50, 0, path+blank);
-		x = 560;
-		this.mi[3] = new MenuImage(x, y, 40, 50, 0, path+blank);
+		if(!this.stayCheck) {
+			this.mi[0] = new MenuImage(x, y, 190, 150, 2, path+stay);			
+		}else {
+			System.out.println(this.stayCheck);
+			this.mi[0] = new MenuImage(x,y,190,150,1,path + here);
+			System.out.println(path+mark);
+		}
+		
+		x = 310;
+		if(!this.hereCheck) {
+			this.mi[1] = new MenuImage(x, y, 190, 150, 0, path+here);
+		}else {
+			this.mi[1] = new MenuImage(x, y, 190, 150, 0, path+mark);			
+		}
+		
+		x = 100; y = 260;
+		if(!this.cashCheck) {
+			this.mi[2] = new MenuImage(x, y, 190, 150, 0, path+cash);			
+		}else {
+			this.mi[2] = new MenuImage(x, y, 190, 150, 0, path+mark);
+		}
+		
+		x = 310;
+		if(!this.cardCheck) {
+			this.mi[3] = new MenuImage(x, y, 190, 150, 0, path+card);
+		}else {
+			this.mi[3] = new MenuImage(x, y, 190, 150, 0, path+mark);			
+		}
 		
 	}
 
 	private void setButton() {
 		
+		System.out.println(this.mi[0].getNum());
 		this.stay = new JButton("",this.mi[0].getIcon());
 		this.stay.setBounds(this.mi[0].getX(), this.mi[0].getY(), this.mi[0].getW(), this.mi[0].getH());
 		this.stay.addActionListener(this);
@@ -105,6 +117,7 @@ class PaymentPanel extends Utill{
 		this.pay.setBounds(310, 500, 150,100 );
 		this.pay.addActionListener(this);
 		add(pay);
+		repaint();
 	}
 	
 	@Override
@@ -112,15 +125,25 @@ class PaymentPanel extends Utill{
 		super.actionPerformed(e);
 		
 		if(e.getSource() == this.stay) {
-			
+			System.out.println(this.stayCheck);
+			this.stayCheck = !this.stayCheck;
+			setImage();
+			setButton();
+			this.stay=null;
 		}else if(e.getSource() == this.here) {
-			
+			this.hereCheck = !this.hereCheck;
+			setImage();
+			setButton();
 		}
 		
 		if(e.getSource() == this.cash) {
-			
+			this.cashCheck = !this.cashCheck;
+			setImage();
+			setButton();
 		}else if(e.getSource() == this.card) {
-			
+			this.cardCheck = !this.cardCheck;
+			setImage();
+			setButton();
 		}
 		
 		if(e.getSource() == this.cancel) {

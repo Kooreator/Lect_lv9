@@ -226,17 +226,27 @@ public class MainPanel extends Utill{
 			for(int j=0; j<this.menu[i].length; j++) {
 				cnt ++;
 				if(e.getSource() == this.menu[i][j]) {
-					System.out.println(cnt);
-					Vector<String> order = new Vector<>();
-					order.add(this.info.get(cnt).get(0));
-					order.add(this.info.get(cnt).get(1));
-					order.add(String.valueOf(MainFrame.total));
-					order.add(String.valueOf(MainFrame.cost));
-					MainFrame.order.add(order);
 					
-					System.out.println(MainFrame.order.size());
+					Vector<String> order = new Vector<>();
+					
 					MainFrame.total++;
-					MainFrame.cost += Integer.valueOf(order.get(1));
+					MainFrame.cost += Integer.valueOf(this.info.get(cnt).get(1));
+					
+					int check = quantity(this.info.get(cnt).get(0));
+					if(check == 0) {
+						order.add(this.info.get(cnt).get(0));
+						order.add(this.info.get(cnt).get(1));						
+						order.add(String.valueOf(1));
+						order.add(String.valueOf(this.info.get(cnt).get(1)));
+						MainFrame.order.add(order);
+					}else {
+						int idx = getMenuIndex(this.info.get(cnt).get(0));
+						MainFrame.order.get(idx).set(2,""+(Integer.valueOf(MainFrame.order.get(idx).get(2))+1));
+						MainFrame.order.get(idx).set(3, ""+(Integer.valueOf(MainFrame.order.get(idx).get(2))*
+								Integer.valueOf(this.info.get(cnt).get(1))));
+					}
+					
+					
 					this.ot.setText(String.valueOf(MainFrame.total));
 					this.pt.setText(String.valueOf(MainFrame.cost));
 					if(MainFrame.mf != null) {
@@ -249,13 +259,16 @@ public class MainPanel extends Utill{
 		
 		if(e.getSource() == this.reset) {
 			MainFrame.order = new Vector<>();
+			MainFrame.total = 0;
+			MainFrame.cost = 0;
 			if(MainFrame.mf != null) {
 				MainFrame.mf.dispose();
 			}
 			MainFrame.mf = new MainFrame();
 		}else if(e.getSource() == this.payment) {
-			MainFrame.pf = new PaymentFrame();
-			
+			if(MainFrame.cost > 0) {				
+				MainFrame.pf = new PaymentFrame();
+			}
 		}else if(e.getSource() == this.coffeeB) {
 			MainFrame.panel = 1;
 			if(MainFrame.mf != null) {
@@ -271,6 +284,23 @@ public class MainPanel extends Utill{
 			MainFrame.mf = new MainFrame();
 		}
 		
+	}
+	public int getMenuIndex(String name) {
+		for(int i=0; i<MainFrame.order.size(); i++) {
+			if(MainFrame.order.get(i).get(0).equals(name)) {
+				return i;
+			}
+		}
+		return -1;
+	}
+	public int quantity(String name) {
+		
+		for(int i=0; i<MainFrame.order.size(); i++) {
+			if(MainFrame.order.get(i).get(0).equals(name)) {
+				return Integer.valueOf(MainFrame.order.get(i).get(2));
+			}
+		}
+		return 0;
 	}
 
 	@Override
