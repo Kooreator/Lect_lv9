@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,7 @@ import manager.Utill;
 class PaymentPanel extends Utill{
 	
 	MenuImage[] mi = new MenuImage[4];
+	MenuImage[] cb = new MenuImage[4];
 	
 	boolean stayCheck;
 	boolean hereCheck;
@@ -46,43 +48,26 @@ class PaymentPanel extends Utill{
 	
 
 	private void setImage() {
-		int x = 100; int y = 100;
+		int x = 100;
+		int y = 100;
 		String path = "images_kiosk/";
 		String stay = "1stay.png";
 		String here = "2here.png";
 		String cash = "3cash.png";
 		String card = "4card.png";
 		String mark = "ok_mark.png";
-		
-		if(!this.stayCheck) {
-			this.mi[0] = new MenuImage(x, y, 190, 150, 2, path+stay);			
-		}else {
-			System.out.println(this.stayCheck);
-			this.mi[0] = new MenuImage(x,y,190,150,1,path + here);
-			System.out.println(path+mark);
-		}
-		
+
+		this.mi[0] = new MenuImage(x, y, 190, 75, 0, path + stay);
 		x = 310;
-		if(!this.hereCheck) {
-			this.mi[1] = new MenuImage(x, y, 190, 150, 0, path+here);
-		}else {
-			this.mi[1] = new MenuImage(x, y, 190, 150, 0, path+mark);			
-		}
-		
-		x = 100; y = 260;
-		if(!this.cashCheck) {
-			this.mi[2] = new MenuImage(x, y, 190, 150, 0, path+cash);			
-		}else {
-			this.mi[2] = new MenuImage(x, y, 190, 150, 0, path+mark);
-		}
-		
+		this.mi[1] = new MenuImage(x, y, 190, 75, 0, path + here);
+		x = 100;
+		y = 260;
+		this.mi[2] = new MenuImage(x, y, 190, 75, 0, path + cash);
 		x = 310;
-		if(!this.cardCheck) {
-			this.mi[3] = new MenuImage(x, y, 190, 150, 0, path+card);
-		}else {
-			this.mi[3] = new MenuImage(x, y, 190, 150, 0, path+mark);			
-		}
-		
+		this.mi[3] = new MenuImage(x, y, 190, 75, 0, path + card);
+
+
+
 	}
 
 	private void setButton() {
@@ -117,46 +102,71 @@ class PaymentPanel extends Utill{
 		this.pay.setBounds(310, 500, 150,100 );
 		this.pay.addActionListener(this);
 		add(pay);
-		repaint();
+
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
 		
+		String path = "images_kiosk/";
+		String stay = "1stay.png";
+		String here = "2here.png";
+		String cash = "3cash.png";
+		String card = "4card.png";
+		String mark = "ok_mark.png";
 		if(e.getSource() == this.stay) {
 			System.out.println(this.stayCheck);
 			this.stayCheck = !this.stayCheck;
-			setImage();
-			setButton();
-			this.stay=null;
+			ImageIcon img = new ImageIcon(path+mark);
+			ImageIcon im = new ImageIcon(path+stay);
+			if(this.stayCheck&&!this.hereCheck) {
+				this.stay.setIcon(img);				
+			}else {
+				this.stay.setIcon(im);
+			}
 		}else if(e.getSource() == this.here) {
 			this.hereCheck = !this.hereCheck;
-			setImage();
-			setButton();
+			ImageIcon img = new ImageIcon(path+mark);
+			ImageIcon im = new ImageIcon(path+here);
+			if(this.hereCheck&&!this.stayCheck) {
+				this.here.setIcon(img);				
+			}else {
+				this.here.setIcon(im);
+			}
 		}
 		
 		if(e.getSource() == this.cash) {
 			this.cashCheck = !this.cashCheck;
-			setImage();
-			setButton();
+			ImageIcon img = new ImageIcon(path+mark);
+			ImageIcon im = new ImageIcon(path+cash);
+			if(this.cashCheck&&!this.cardCheck) {
+				this.cash.setIcon(img);				
+			}else {
+				this.cash.setIcon(im);
+			}
 		}else if(e.getSource() == this.card) {
 			this.cardCheck = !this.cardCheck;
-			setImage();
-			setButton();
+			ImageIcon img = new ImageIcon(path+mark);
+			ImageIcon im = new ImageIcon(path+card);
+			if(this.cardCheck&&!this.cashCheck) {
+				this.card.setIcon(img);				
+			}else {
+				this.card.setIcon(im);
+			}
 		}
 		
-		if(e.getSource() == this.cancel) {
-			if(MainFrame.pf != null) {
+		if (e.getSource() == this.cancel) {
+			if (MainFrame.pf != null) {
 				MainFrame.pf.dispose();
-			}			
-		}else if(e.getSource() == this.pay) {
-			JOptionPane.showMessageDialog(null, "결제완료");
-			MainFrame.pf.dispose();
+			}
+		} else if (e.getSource() == this.pay) {
+			if((this.stayCheck || this.hereCheck) && (this.cardCheck || this.cashCheck)) {				
+				JOptionPane.showMessageDialog(null, "결제완료");
+				MainFrame.pf.dispose();
+				MainFrame.mf.dispose();
+			}
 		}
-		
-		
-		
 	}
 }
 

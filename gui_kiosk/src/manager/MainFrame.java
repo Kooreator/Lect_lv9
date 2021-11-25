@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import javax.swing.JFrame;
 
-import models.CoffeePanel;
 import models.MainPanel;
 import models.PaymentFrame;
 import models.SubVeberagePanel;
